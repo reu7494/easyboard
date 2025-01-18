@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { navigate } from "react-router-dom";
 
-export default function BoardList({ item, index }) {
+export default function BoardList({ key, item, index }) {
+  const [viewContent, setViewContent] = useState();
+
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/posts");
+      const data = await response.json();
+      setViewContent(data); // 서버에서 가져온 데이터를 상태로 설정
+    } catch (error) {
+      console.error("데이터 조회 중 오류 발생:", error);
+    }
+  };
+
+  const moveToWrite = () => {
+    navigate("/write");
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
     <div>
-      <div className="listBox">
-        <p>번호 {index + 1}</p>
-        <p>등록 시간: {item.timestamp}</p>
-        <p>제목: {item.title}</p>
-        <p>내용: {item.content}</p>
-        <button>수정</button>
-        <button>삭제</button>
+      <ui className="listBox">
+        {viewContent.map((board) => (
+          <li key={board.idx}>
+            <Link to={`/board/${board.idx}`}>{board.title}</Link>
+          </li>
+        ))}
+      </ui>
+      <div>
+        <button onClick={moveToWrite}>글쓰기</button>
       </div>
     </div>
   );
