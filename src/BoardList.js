@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function BoardList({ key, item, index }) {
+export default function BoardList() {
   const [viewContent, setViewContent] = useState();
 
   const fetchPosts = async () => {
@@ -14,10 +14,6 @@ export default function BoardList({ key, item, index }) {
     }
   };
 
-  const moveToWrite = () => {
-    navigate("/write");
-  };
-
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -25,15 +21,13 @@ export default function BoardList({ key, item, index }) {
   return (
     <div>
       <ui className="listBox">
-        {viewContent.map((board) => (
-          <li key={board.idx}>
-            <Link to={`/board/${board.idx}`}>{board.title}</Link>
-          </li>
-        ))}
+        {viewContent &&
+          viewContent.map((board) => (
+            <li key={board.idx}>
+              <Link to={`/board/${board.idx}`}>{board.title}</Link>
+            </li>
+          ))}
       </ui>
-      <div>
-        <button onClick={moveToWrite}>글쓰기</button>
-      </div>
     </div>
   );
 }
