@@ -4,7 +4,7 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "localhost", // MySQL 서버 주소
   user: "root", // MySQL 사용자
-  password: 1234, // MySQL 비밀번호
+  password: "1234", // MySQL 비밀번호
   database: "easyboarddatabase", // 데이터베이스 이름
 });
 

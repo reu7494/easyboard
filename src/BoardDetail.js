@@ -1,7 +1,17 @@
 import React from "react";
+import BoardList from "./BoardList";
 
 const BoardDetail = () => {
-  return <div>게시판 상세보기가 표시됩니다.</div>;
+  return (
+    <div>
+      <BoardList
+        idx={BoardList.idx}
+        title={BoardList.title}
+        contents={BoardList.contents}
+        createdBy={BoardList.createdBy}
+      />
+    </div>
+  );
 };
 
 export default BoardDetail;

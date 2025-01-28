@@ -12,7 +12,7 @@ export default function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/board" element={<BoardList />} />
       <Route path="/write" element={<BoardWrite />} />
-      <Route path="/board/:idx" element={<BoardDetail />} />
+      <Route path="/board/:id" element={<BoardDetail />} />
     </Routes>
   );
 }

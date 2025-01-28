@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function BoardList() {
-  const [viewContent, setViewContent] = useState();
+  const [viewContent, setViewContent] = useState([]);
 
   const fetchPosts = async () => {
     try {
@@ -20,14 +20,14 @@ export default function BoardList() {
 
   return (
     <div>
-      <ui className="listBox">
+      <div className="listBox">
         {viewContent &&
           viewContent.map((board) => (
-            <li key={board.idx}>
-              <Link to={`/board/${board.idx}`}>{board.title}</Link>
+            <li key={board.id}>
+              <Link to={`/board/${board.id}`}>{board.title}</Link>
             </li>
           ))}
-      </ui>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import InputClicked from "./InputClicked";
-import BoardList from "./BoardList";
 import { useNavigate } from "react-router-dom";
 
 export default function BoardWrite() {
@@ -9,21 +8,19 @@ export default function BoardWrite() {
     createdBy: "",
     content: "",
   });
-  const [viewContent, setViewContent] = useState([]);
-
+  const [board, setBoard] = useState([]);
+  const { title, createdBy, contents } = board;
   const navigate = useNavigate;
   const backToList = () => {
     navigate("/board");
   };
-
-  const { title, createdBy, contents } = viewContent;
 
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/posts");
       if (response.ok) {
         const data = await response.json();
-        setViewContent(data); // 서버에서 가져온 데이터를 상태로 설정
+        setBoard(data); // 서버에서 가져온 데이터를 상태로 설정
       } else {
         console.error("데이터 가져오기 실패");
       }
@@ -39,7 +36,7 @@ export default function BoardWrite() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(),
+        body: JSON.stringify(boardContent),
       });
 
       if (response.ok) {
@@ -104,9 +101,6 @@ export default function BoardWrite() {
           <button onClick={backToList}>취소</button>
         </div>
       </div>
-      {viewContent.map((item, index) => (
-        <BoardList key={item.id} item={item} index={index} />
-      ))}
     </div>
   );
 }
