@@ -4,15 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function BoardWrite() {
   const [boardContent, setBoardContent] = useState({
-    title: "",
-    createdBy: "",
+    list_name: "",
+    user_name: "",
     content: "",
   });
   const [board, setBoard] = useState([]);
-  const { title, createdBy, contents } = board;
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const backToList = () => {
-    navigate("/board");
+    navigate("/");
   };
 
   const fetchData = async () => {
@@ -41,9 +40,9 @@ export default function BoardWrite() {
 
       if (response.ok) {
         alert("글 작성 성공!");
-        setBoardContent({ title: "", content: "" }); // 입력 필드 초기화
+        setBoardContent({ list_name: "", user_name: "", content: "" }); // 입력 필드 초기화
         fetchData(); // 새로 작성한 글을 포함해 데이터 다시 가져오기
-        navigate("/board");
+        navigate("/");
       } else {
         alert("글 작성 실패!");
       }
@@ -67,8 +66,8 @@ export default function BoardWrite() {
         <span>제목</span>
         <InputClicked
           type="text"
-          name="title"
-          value={title}
+          name="list_name"
+          value={boardContent.list_name}
           placeholder="제목을 입력하세요"
           onChange={getVallue}
         />
@@ -78,8 +77,8 @@ export default function BoardWrite() {
         <span>작성자</span>
         <InputClicked
           type="text"
-          name="createdBy"
-          value={createdBy}
+          name="user_name"
+          value={boardContent.user_name}
           placeholder="작성자명을 입력하세요"
           onChange={getVallue}
         />
@@ -91,7 +90,7 @@ export default function BoardWrite() {
           name="content"
           cols="30"
           rows="10"
-          value={contents}
+          value={boardContent.content}
           placeholder="내용을 입력하세요"
           onChange={getVallue}
         />

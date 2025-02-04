@@ -6,7 +6,7 @@ export default function BoardList() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/posts");
+      const response = await fetch("http://localhost:5000/api/get");
       const data = await response.json();
       setViewContent(data); // 서버에서 가져온 데이터를 상태로 설정
     } catch (error) {
@@ -24,7 +24,7 @@ export default function BoardList() {
         {viewContent &&
           viewContent.map((board) => (
             <li key={board.id}>
-              <Link to={`/board/${board.id}`}>{board.title}</Link>
+              <Link to={`/board/${board.id}`}>{board.list_name}</Link>
             </li>
           ))}
       </div>

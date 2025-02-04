@@ -12,11 +12,11 @@ app.use(bodyParser.json());
 
 // 데이터 추가 (POST 요청)
 app.post("/api/posts", (req, res) => {
-  const { title, content } = req.body;
+  const { list_name, user_name, content } = req.body;
   const query =
-    "INSERT INTO list (list_name, user_name, current_state, future_state, views, recommended_number) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0)";
+    "INSERT INTO list (list_name, user_name, content, current_state, future_state, views, recommended_number) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0)";
 
-  db.query(query, [title, content], (err, result) => {
+  db.query(query, [list_name, user_name, content], (err, result) => {
     if (err) {
       console.error("데이터 삽입 오류:", err);
       res.status(500).send("데이터 삽입 중 오류 발생");
@@ -27,7 +27,7 @@ app.post("/api/posts", (req, res) => {
 });
 
 // 데이터 가져오기 (GET 요청)
-app.get("/api/posts", (req, res) => {
+app.get("/api/get", (req, res) => {
   const query = "SELECT * FROM list";
 
   db.query(query, (err, results) => {
