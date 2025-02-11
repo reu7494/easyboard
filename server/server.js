@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.post("/api/posts", (req, res) => {
   const { list_name, user_name, content } = req.body;
   const query =
-    "INSERT INTO list (list_name, user_name, content, current_state, future_state, views, recommended_number) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0)";
+    "INSERT INTO easyboarddatabase (list_name, user_name, content, current_state, future_state, views, recommended_number) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0)";
 
   db.query(query, [list_name, user_name, content], (err, result) => {
     if (err) {
@@ -28,7 +28,7 @@ app.post("/api/posts", (req, res) => {
 
 // 데이터 가져오기 (GET 요청)
 app.get("/api/get", (req, res) => {
-  const query = "SELECT * FROM list";
+  const query = "SELECT * FROM easyboarddatabase";
 
   db.query(query, (err, results) => {
     if (err) {

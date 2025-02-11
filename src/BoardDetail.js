@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from "react";
-import BoardList from "./BoardList";
+import { useParams } from "react-router-dom";
+import Board from "./Board";
 
 export default function BoardDetail() {
+  const { id } = useParams();
+  const [loading, setLoading] = useState();
   const [board, setBoard] = useState();
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/get");
-      const data = await response.json();
-      setBoard(data); // 서버에서 가져온 데이터를 상태로 설정
-    } catch (error) {
-      console.error("데이터 조회 중 오류 발생:", error);
+  const getBoard = async () => {
+    const resp = await fetch("http://localhost:5000/api/posts");
+    if (resp.ok) {
+      const data = await resp.json();
+      setBoard(data);
+      setLoading(false);
     }
   };
   useEffect(() => {
-    fetchPosts();
+    getBoard();
   }, []);
-
   return (
     <div>
-      <BoardList
-        id={BoardList.id}
-        title={BoardList.list_name}
-        contents={BoardList.contents}
-        createdBy={BoardList.user_name}
-      />
+      {loading ? (
+        <h2>loading...</h2>
+      ) : (
+        <Board
+          id={board.id}
+          list_name={board.list_name}
+          contents={board.contents}
+          user_name={board.user_name}
+        />
+      )}
     </div>
   );
 }
