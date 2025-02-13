@@ -6,17 +6,27 @@ export default function BoardDetail() {
   const { id } = useParams();
   const [loading, setLoading] = useState();
   const [board, setBoard] = useState();
-  const getBoard = async () => {
-    const resp = await fetch("http://localhost:5000/api/posts");
-    if (resp.ok) {
-      const data = await resp.json();
-      setBoard(data);
-      setLoading(false);
-    }
-  };
+
   useEffect(() => {
+    const getBoard = async () => {
+      try {
+        const resp = await fetch(`http://localhost:5000/api/get/${id}`);
+        if (resp.ok) {
+          const data = await resp.json();
+          setBoard(data);
+        } else {
+          console.error("게시글 찾을 수 없음");
+        }
+      } catch (error) {
+        console.error("데이터 가져오는 중 오류 발생:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     getBoard();
-  }, []);
+  }, [id]);
+
   return (
     <div>
       {loading ? (
@@ -25,7 +35,7 @@ export default function BoardDetail() {
         <Board
           id={board.id}
           list_name={board.list_name}
-          contents={board.contents}
+          content={board.content}
           user_name={board.user_name}
         />
       )}
